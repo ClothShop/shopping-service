@@ -1,16 +1,15 @@
-const express = require('express')
-const connectDB = require('./config/db')
+const express = require('express');
+require('dotenv').config();
+const connectDB = require('./config/db');
 const cartRoutes = require('./routes/routes')
-require('dotenv').config()
+const promoRoutes = require('./routes/promo.routes');
 
-const app = express()
-const PORT = process.env.PORT || 3000
+const app = express();
+app.use(express.json());
+app.use('/promos', promoRoutes);
+app.use('/carts', cartRoutes)
 
-app.use(express.json())
-app.use('/cart', cartRoutes)
+connectDB();
 
-connectDB()
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+const PORT = process.env.PORT || 8084;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
