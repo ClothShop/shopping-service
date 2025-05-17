@@ -4,18 +4,15 @@ const getCartByUserId = async (user_id) => {
   const cart = await CartModel.findOne({ user_id: String(user_id) })
   if (!cart) return null;
 
-  // ➕ Жалпы бағасын есептеу
   const total_price = cart.products.reduce((sum, product) => {
     return sum + product.count * product.price;
   }, 0)
 
-  // 👇 total_price бірге қайтарамыз
   return {
-    ...cart.toObject(), // cart-ты объектке айналдырамыз
+    ...cart.toObject(),
     total_price
   }
 }
-
 
 const addOrIncrementProduct = async (user_id, product) => {
   const userIdStr = String(user_id)
@@ -34,15 +31,8 @@ const addOrIncrementProduct = async (user_id, product) => {
   }
 }
 
-const removeProduct = async (user_id, product_id) => {
-  return await CartModel.updateOne(
-    { user_id: String(user_id) },
-    { $pull: { products: { product_id } } }
-  )
-}
-
 const incrementProduct = async (user_id, product_id) => {
-  return await CartModel.updateOne(
+  return CartModel.updateOne(
     { user_id: String(user_id), 'products.product_id': product_id },
     { $inc: { 'products.$.count': 1 } }
   )
@@ -62,6 +52,13 @@ const decrementProduct = async (user_id, product_id) => {
       return await removeProduct(userIdStr, product_id)
     }
   }
+}
+
+const removeProduct = async (user_id, product_id) => {
+  return CartModel.updateOne(
+      { user_id: String(user_id) },
+      { $pull: { products: { product_id } } }
+  )
 }
 
 module.exports = {

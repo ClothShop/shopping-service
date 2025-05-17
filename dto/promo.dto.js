@@ -8,4 +8,6 @@ const promoCodeSchema = z.object({
     isActive: z.boolean().optional(),
 });
 
-module.exports = { promoCodeSchema };
+const updatePromoCodeSchema = promoCodeSchema.partial();
+
+module.exports = { promoCodeSchema, updatePromoCodeSchema };

@@ -1,10 +1,8 @@
 const promoService = require('../services/promo.service');
-const { promoCodeSchema } = require('../dto/promo.dto');
 
 exports.create = async (req, res) => {
     try {
-        const validated = promoCodeSchema.parse(req.body);
-        const promo = await promoService.createPromo(validated);
+        const promo = await promoService.createPromo(req.body);
         res.status(201).json(promo);
     } catch (e) {
         res.status(400).json({ error: e.errors || e.message });
