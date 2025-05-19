@@ -12,10 +12,10 @@ const PORT = process.env.PORT || 8084;
 
 const app = express();
 
-app.use(express.json());
 app.use(cookieParser());
-app.use('/promos', promoRoutes);
-app.use('/carts', cartRoutes)
+app.use(express.json());
+app.use('/api/v1/promos', promoRoutes);
+app.use('/api/v1/carts', cartRoutes)
 
 connectDB();
 

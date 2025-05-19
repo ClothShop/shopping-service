@@ -2,10 +2,10 @@ const { z } = require('zod');
 
 const promoCodeSchema = z.object({
     code: z.string().min(3),
-    discountPercentage: z.number().min(1).max(100),
-    validFrom: z.string(),
-    validTo: z.string(),
-    isActive: z.boolean().optional(),
+    discount_percentage: z.number().min(1).max(100),
+    valid_from: z.string(),
+    valid_to: z.string(),
+    is_active: z.boolean().optional(),
 });
 
 const updatePromoCodeSchema = promoCodeSchema.partial();
