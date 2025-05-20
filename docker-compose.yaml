@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  shopping-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shopping-service
+    ports:
+      - "8084:8084"
+    env_file: .env
+    environment:
+      MONGO_URI: mongodb+srv://ZhubanyshZh:Zhuba.005@firstcluster.za6wm.mongodb.net/?retryWrites=true&w=majority&appName=FirstCluster
