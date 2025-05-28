@@ -14,7 +14,13 @@ const getPromoById = async (id) => {
 };
 
 const getPromoByCode = async (code) => {
-    return await PromoCode.findOne({ code });
+    const now = new Date();
+    return await PromoCode.findOne({
+        code,
+        is_active: true,
+        valid_from: { $lte: now },
+        valid_to: { $gte: now }
+    });
 };
 
 const updatePromo = async (id, data) => {
